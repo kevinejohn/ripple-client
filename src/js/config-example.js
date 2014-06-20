@@ -58,7 +58,9 @@ var Options = {
   tx_last_ledger: 3,
 
   // Set max transaction fee for network in drops of XRP
-  max_tx_network_fee: 12
+  max_tx_network_fee: 12,
+
+  kyc_profile_deadline: 'July 19, 2014'
 };
 
 // Load client-side overrides
