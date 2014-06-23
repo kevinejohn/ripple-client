@@ -645,8 +645,14 @@ module.controller('AppCtrl', ['$rootScope', '$compile', 'rpId', 'rpNetwork',
       return;
     }
 
+    // Only show banner in the web client
+    if ('web' !== $scope.client) {
+      $scope.numberOfDaysLeftKyc = undefined;
+      return;
+    }
+
     // Don't show banner before account is funded
-    if ('web' === $scope.client && !$scope.account.Balance && $scope.connected) {
+    if (!$scope.account.Balance && $scope.connected) {
       $scope.numberOfDaysLeftKyc = undefined;
       return;
     }
@@ -663,6 +669,7 @@ module.controller('AppCtrl', ['$rootScope', '$compile', 'rpId', 'rpNetwork',
         $scope.numberOfDaysLeftKyc = undefined;
       }
       else {
+        // Show banner
         var end = new Date(Options.kyc_profile_deadline);
         var now = new Date();
         var diff = end - now;
