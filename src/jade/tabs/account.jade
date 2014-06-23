@@ -108,8 +108,7 @@ section.col-xs-12.content(ng-controller="AccountCtrl")
                 label(for="line1", l10n) Line 1
                 input.form-control(
                   name='line1', id="line1", type='text'
-                  ng-model='profile.address.line1'
-                  required)
+                  ng-model='profile.address.line1')
             .row
               .col-xs-12.col-sm-12.col-md-12
                 label(for="line2", l10n) Line 2
@@ -121,30 +120,26 @@ section.col-xs-12.content(ng-controller="AccountCtrl")
                 label(for="city", l10n) City
                 input.form-control(
                   name='city', id="city", type='text'
-                  ng-model='profile.address.city'
-                  required)
+                  ng-model='profile.address.city')
             .row
               .col-xs-12.col-sm-12.col-md-12
                 label(for="region", l10n) State/Region
                 input.form-control(
                   name='region', id="region", type='text'
-                  ng-model='profile.address.region'
-                  required)
+                  ng-model='profile.address.region')
             .row
               .col-xs-12.col-sm-12.col-md-12
                 label(for="postalCode", l10n) ZIP/Postal Code
                 input.form-control(
                   name='postalCode', id="postalCode", type='text'
-                  ng-model='profile.address.postalCode'
-                  required)
+                  ng-model='profile.address.postalCode')
             .row
               .col-xs-12.col-sm-12.col-md-12
                 label(for="country", l10n) Country
                 input.form-control(
                   name='country', id="country", type='text'
                   rp-combobox="countries", rp-combobox-select
-                  ng-model='profile.address.country'
-                  required)
+                  ng-model='profile.address.country')
             .row
               .col-xs-9.col-sm-8.col-md-6
                 button.btn.btn-block.btn-primary.submit(type='submit', l10n) Update address
@@ -170,16 +165,14 @@ section.col-xs-12.content(ng-controller="AccountCtrl")
                   input.form-control.line1(
                     name='id_type', id="id_type", type='text'
                     rp-combobox="id_types", rp-combobox-select
-                    ng-model='profile.nationalID.type'
-                    required)
+                    ng-model='profile.nationalID.type')
               .row
                 .col-xs-12.col-sm-12.col-md-12
                   label(for="id_number", ng-hide='profile.entityType == "organization"', l10n) ID Number
                   label(for="id_number", ng-show='profile.entityType == "organization"', l10n) Tax ID
                   input.form-control.line1(
                     name='id_number', id="id_number", type='text'
-                    ng-model='profile.nationalID.number'
-                    required)
+                    ng-model='profile.nationalID.number')
               .row(ng-show='profile.entityType == "individual"')
                 .col-xs-12.col-sm-12.col-md-12
                   label(for="issuing_country", l10n) Issuing Country
@@ -212,22 +205,19 @@ section.col-xs-12.content(ng-controller="AccountCtrl")
                   input.form-control(
                     name='day', id="day", type='text'
                     rp-combobox="calendar.days", rp-combobox-select
-                    ng-model='profile.birthday.day'
-                    ng-required='profile.entityType === "individual"')
+                    ng-model='profile.birthday.day')
                 .col-xs-4.col-sm-3.col-md-3
                   label(for="month", l10n) Month
                   input.form-control(
                     name='month', id="month", type='text'
                     rp-combobox="calendar.months", rp-combobox-select
-                    ng-model='profile.birthday.month'
-                    ng-required='profile.entityType === "individual"')
+                    ng-model='profile.birthday.month')
                 .col-xs-4.col-sm-3.col-md-3
                   label(for="year", l10n) Year
                   input.form-control(
                     name='year', id="year", type='text'
                     rp-combobox="calendar.years", rp-combobox-select
-                    ng-model='profile.birthday.year'
-                    ng-required='profile.entityType === "individual"')
+                    ng-model='profile.birthday.year')
               .row
                 .col-xs-9.col-sm-8.col-md-6
                   button.btn.btn-block.btn-primary.submit(type='submit', l10n) Update date of birth
