@@ -153,6 +153,11 @@ AccountTab.prototype.angular = function(module)
             }, 3000);
           });
         });
+
+        rpProfile.saveProfile(function (err, result) {
+          // TODO: Add error checking
+          //console.log('Saved profile', err, result);
+        });
       }
 
       $scope.saveID = function (callback) {
