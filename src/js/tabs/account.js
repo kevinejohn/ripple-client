@@ -18,8 +18,8 @@ AccountTab.prototype.generateHtml = function ()
 
 AccountTab.prototype.angular = function(module)
 {
-  module.controller('AccountCtrl', ['$scope', '$rootScope', 'rpId', 'rpKeychain', 'rpProfile',
-    function ($scope, $rootScope, $id, keychain, rpProfile)
+  module.controller('AccountCtrl', ['$scope', '$rootScope', 'rpId', 'rpKeychain', 'rpProfile', '$timeout',
+    function ($scope, $rootScope, $id, keychain, rpProfile, $timeout)
     {
       if (!$id.loginStatus) return $id.goId();
 
@@ -124,10 +124,8 @@ AccountTab.prototype.angular = function(module)
               $scope.status = 'successName';
             }
 
-            setTimeout(function() {
-              $scope.$apply(function() {
-                $scope.status = '';
-              });
+            $timeout(function() {
+              $scope.status = '';
             }, 3000);
           });
         });
@@ -150,10 +148,8 @@ AccountTab.prototype.angular = function(module)
               $scope.status = 'successAddress';
             }
 
-            setTimeout(function() {
-              $scope.$apply(function() {
-                $scope.status = '';
-              });
+            $timeout(function() {
+              $scope.status = '';
             }, 3000);
           });
         });
@@ -176,10 +172,8 @@ AccountTab.prototype.angular = function(module)
               $scope.status = 'successID';
             }
 
-            setTimeout(function() {
-              $scope.$apply(function() {
-                $scope.status = '';
-              });
+            $timeout(function() {
+              $scope.status = '';
             }, 3000);
           });
         });
@@ -202,10 +196,8 @@ AccountTab.prototype.angular = function(module)
               $scope.status = 'successDob';
             }
 
-            setTimeout(function() {
-              $scope.$apply(function() {
-                $scope.status = '';
-              });
+            $timeout(function() {
+              $scope.status = '';
             }, 3000);
           });
         });

@@ -19,8 +19,8 @@ KycTab.prototype.generateHtml = function ()
 
 KycTab.prototype.angular = function(module)
 {
-  module.controller('KycCtrl', ['$scope', '$rootScope', '$location', 'rpProfile',
-                                    function ($scope, $rootScope, $location, rpProfile)
+  module.controller('KycCtrl', ['$scope', '$rootScope', '$location', 'rpProfile', '$timeout',
+                                    function ($scope, $rootScope, $location, rpProfile, $timeout)
   {
     //$scope.profile.entityType = ($scope.profile && $scope.profile.entityType) ? $scope.profile.entityType: 'individual'; // Default to individual
     $scope.calendar = rpProfile.getBirthdayScope();
@@ -89,10 +89,8 @@ KycTab.prototype.angular = function(module)
               $rootScope.redirectURL = undefined;
 
               $rootScope.completedProfileKyc = true;
-              setTimeout(function() {
-                $scope.$apply(function() {
-                  $rootScope.completedProfileKyc = undefined;
-                });
+              $timeout(function() {
+                $rootScope.completedProfileKyc = undefined;
               }, 5000);
             }
           });
