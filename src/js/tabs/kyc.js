@@ -69,7 +69,7 @@ KycTab.prototype.angular = function(module)
     });
 
     $scope.save = function () {
-      async.parallel([rpProfile.saveName, rpProfile.saveAddress, rpProfile.saveEntityType, rpProfile.saveNationalID, rpProfile.saveBirthday], function (err, results) {
+      async.parallel([rpProfile.saveName, rpProfile.saveAddress, rpProfile.saveEntityType, rpProfile.saveNationalID, rpProfile.saveBirthday, rpProfile.saveProfile], function (err, results) {
         if (err) {
           console.log('Error saving profile: ', err);
 

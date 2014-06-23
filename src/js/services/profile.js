@@ -7,8 +7,8 @@
 
 var module = angular.module('profile', []);
 
-module.factory('rpProfile', ['$rootScope',
-                        function($scope)
+module.factory('rpProfile', ['$rootScope', 'rpAuthFlow',
+                        function($scope, rpAuthFlow)
 {
   var id_type_map_individual = {
     'Social Security Number': 'ssn',
@@ -144,6 +144,28 @@ module.factory('rpProfile', ['$rootScope',
     }
   }
 
+  var saveProfile = function(callback) {
+    var blob = $scope.userBlob;
+
+    var address = $scope.profile.address;
+    var username = $scope.userCredentials.username;
+
+    var options = {
+      url: blob.url,
+      username: username,
+      auth_secret: blob.data.auth_secret,
+      blob_id: blob.id,
+      profile: {
+        //phone: '',
+        country: address.country,
+        region: address.region,
+        city: address.city
+      }
+    }
+    var authFlow = rpAuthFlow.getVaultClient(username);
+    authFlow.client.updateProfile(options, callback);
+  }
+
   return {
     getProfileScope: getProfileScope,
     getBirthdayScope: getBirthdayScope,
@@ -153,7 +175,8 @@ module.factory('rpProfile', ['$rootScope',
     saveAddress: saveAddress,
     saveEntityType: saveEntityType,
     saveNationalID: saveNationalID,
-    saveBirthday: saveBirthday
+    saveBirthday: saveBirthday,
+    saveProfile: saveProfile
   }
 }]);
 
