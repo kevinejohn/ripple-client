@@ -1879,8 +1879,17 @@ html.t-trade header nav ul > li.active#nav-advanced > a:after {
 }
 
 #t-kyc {
-  .button-unselected {
+  a.entityType {
+    display: block;
+    padding: 10px;
+    border-radius: 2px;
+    margin: 0 0 3px;
     background: #f3f3f3;
-    color: #000000;
+
+    &:hover, &.active {
+      color: #F9FAFA;
+      text-decoration: none;
+      background: @ripple-color;
+    }
   }
 }
