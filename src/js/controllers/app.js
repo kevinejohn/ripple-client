@@ -628,10 +628,32 @@ module.controller('AppCtrl', ['$rootScope', '$compile', 'rpId', 'rpNetwork',
 
 
   // Start of KYC code
-  $scope.$watch('userBlob', function() {
+  function updateKYCBanner() {
+
+    // Do not show banner if deadline is not set
+    if (!Options.kyc_profile_deadline) {
+      $scope.numberOfDaysLeftKyc = undefined;
+      return;
+    }
+
+    // Don't show banner on specific views
+    var url = $location.url();
+    if (url === '/login' ||
+      url === '/register' ||
+      url === '/kyc') {
+      $scope.numberOfDaysLeftKyc = undefined;
+      return;
+    }
+
+    // Don't show banner before account is funded
+    if ('web' === $scope.client && !$scope.account.Balance && $scope.connected) {
+      $scope.numberOfDaysLeftKyc = undefined;
+      return;
+    }
+
+    // Check if profile has been completed
     var blob = $scope.userBlob;
-    if (Options.kyc_profile_deadline && // Only check if the deadline is set
-      blob && typeof(blob.identity) !== 'undefined') {
+    if (blob && typeof(blob.identity) !== 'undefined') {
       var key = blob.key;
 
       var profile = blob.identity.getAll(key);
@@ -649,7 +671,13 @@ module.controller('AppCtrl', ['$rootScope', '$compile', 'rpId', 'rpNetwork',
         $scope.numberOfDaysLeftKyc = str;
       }
     }
+  }
+  $scope.$watch('userBlob', function() {
+    updateKYCBanner();
   }, true);
+  $scope.$on('$locationChangeStart', function(){
+    updateKYCBanner();
+  });
   $scope.completeKycProfile = function() {
     $scope.redirectURL = $location.url();
     $location.path('/kyc');
