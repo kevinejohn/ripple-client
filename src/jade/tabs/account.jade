@@ -223,6 +223,10 @@ section.col-xs-12.content(ng-controller="AccountCtrl")
                   button.btn.btn-block.btn-primary.submit(type='submit', l10n) Update date of birth
                 .col-xs-3.col-sm-3.col-md-3
                   a.txtbtn(href="", ng-click="edit = ''; status = ''", l10n) Cancel
+      .section
+        .row
+          .col-xs-12.col-sm-12.col-md-12
+            != require("../notification/kycinfo.jade")()
 
 
 
