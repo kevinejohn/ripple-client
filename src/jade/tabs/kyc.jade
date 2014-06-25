@@ -1,5 +1,6 @@
 section.col-xs-12.content(ng-controller="KycCtrl")
-  != require("../notification/kycinfo.jade")()
+  div.auth-attention
+    != require("../notification/kycinfo.jade")()
   .alert.alert-success(ng-show="'success' == status", l10n) Your profile has been saved successfully.
   .alert.alert-danger(ng-show="'failed' == status", l10n) Could not save your profile.
   .box
