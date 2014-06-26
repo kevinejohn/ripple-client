@@ -71,6 +71,18 @@ KycTab.prototype.angular = function(module)
       $scope.id_types = rpProfile.getNationalIDScope($scope.profile);
     });
 
+    function done() {
+      // Redirect back to original referer
+      if ($rootScope.redirectURL) {
+        $location.path($rootScope.redirectURL);
+        $rootScope.redirectURL = undefined;
+      }
+      else {
+        // Go to account
+        $location.path('/account');
+      }
+    }
+
     $scope.save = function () {
       async.parallel([rpProfile.saveName, rpProfile.saveAddress, rpProfile.saveEntityType, rpProfile.saveNationalID, rpProfile.saveBirthday, rpProfile.saveProfile], function (err, results) {
         if (err) {
@@ -86,27 +98,19 @@ KycTab.prototype.angular = function(module)
           $scope.$apply(function () {
             $scope.status = 'success';
 
-            // Redirect back to original referer
-            if ($rootScope.redirectURL) {
-              $location.path($rootScope.redirectURL);
-              $rootScope.redirectURL = undefined;
+            $rootScope.completedProfileKyc = true;
+            $timeout(function() {
+              $rootScope.completedProfileKyc = undefined;
+            }, 5000);
 
-              $rootScope.completedProfileKyc = true;
-              $timeout(function() {
-                $rootScope.completedProfileKyc = undefined;
-              }, 5000);
-            }
+            done();
           });
         }
       });
     };
 
     $scope.cancel = function () {
-      // Redirect back to original referer
-      if ($rootScope.redirectURL) {
-        $location.path($rootScope.redirectURL);
-        $rootScope.redirectURL = undefined;
-      }
+      done();
     };
 
   }]);
