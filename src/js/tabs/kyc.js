@@ -36,7 +36,9 @@ KycTab.prototype.angular = function(module)
       if ($scope.profile &&
         $scope.profile.nationalID &&
         $scope.profile.nationalID.type !== 'Social Security Number' &&
-        $scope.profile.nationalID.country === 'USA') {
+        ($scope.profile.nationalID.country === 'USA' ||
+        $scope.profile.nationalID.country === 'United States') &&
+        $scope.profile.entityType === 'individual') {
         $scope.show_no_ssn = true;
       }
       else {
@@ -65,6 +67,7 @@ KycTab.prototype.angular = function(module)
     });
 
     $scope.$watch('profile.entityType', function(){
+      updateShowNoSSN();
       $scope.id_types = rpProfile.getNationalIDScope($scope.profile);
     });
 
