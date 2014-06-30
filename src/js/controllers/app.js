@@ -657,6 +657,32 @@ module.controller('AppCtrl', ['$rootScope', '$compile', 'rpId', 'rpNetwork',
       return;
     }
 
+    if (isProfileCompleted()) {
+      $scope.numberOfDaysLeftKyc = undefined;
+    }
+    else {
+      // Show banner
+      var end = new Date(Options.kyc_profile_deadline);
+      var now = new Date();
+      var diff = end - now;
+      var days = Math.round(diff / (24 * 60 * 60 * 1000));
+      var str = days > 1 ? days + ' days': days + ' day';
+      $scope.numberOfDaysLeftKyc = str;
+    }
+  }
+  $scope.$watch('userBlob', function() {
+    updateKYCBanner();
+
+    $scope.completedProfile = isProfileCompleted();
+  }, true);
+  $scope.$on('$locationChangeStart', function(){
+    updateKYCBanner();
+  });
+  $scope.completeKycProfile = function() {
+    $scope.redirectURL = $location.url();
+    $location.path('/kyc');
+  }
+  function isProfileCompleted() {
     // Check if profile has been completed
     var blob = $scope.userBlob;
     if (blob && typeof(blob.identity) !== 'undefined') {
@@ -666,28 +692,10 @@ module.controller('AppCtrl', ['$rootScope', '$compile', 'rpId', 'rpNetwork',
 
       if (profile.name &&
         profile.name.value.length > 0) {
-        $scope.numberOfDaysLeftKyc = undefined;
-      }
-      else {
-        // Show banner
-        var end = new Date(Options.kyc_profile_deadline);
-        var now = new Date();
-        var diff = end - now;
-        var days = Math.round(diff / (24 * 60 * 60 * 1000));
-        var str = days > 1 ? days + ' days': days + ' day';
-        $scope.numberOfDaysLeftKyc = str;
+        return true;
       }
     }
-  }
-  $scope.$watch('userBlob', function() {
-    updateKYCBanner();
-  }, true);
-  $scope.$on('$locationChangeStart', function(){
-    updateKYCBanner();
-  });
-  $scope.completeKycProfile = function() {
-    $scope.redirectURL = $location.url();
-    $location.path('/kyc');
+    return false;
   }
   // End of KYC code
 
