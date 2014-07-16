@@ -33,6 +33,81 @@ SendTab.prototype.angular = function (module)
   {
     if (!$id.loginStatus) return $id.goId();
 
+    $scope.readQRCode = function(elements) {
+      $scope.qr_result = undefined;
+
+      if(elements.files.length !== 1 && elements.files[0].type.indexOf("image/") !== 0) {
+        $scope.qr_result = 'failed';
+        return;
+      }
+
+      qrcode.callback = function(result) {
+        if(result === 'error decoding QR Code') {
+          $scope.qr_result = 'failed';
+          return;
+        }
+
+        var uri = new URI(result);
+
+        var address = '';
+        if(uri.protocol() === '') {
+          address = uri.toString();
+        }
+        else if(uri.protocol() !== 'ripple' ||
+          !uri.path() || uri.path() === '') {
+
+          $scope.$apply(function() {
+            $scope.qr_result = 'invalid';
+          });
+        }
+        else {
+          address = uri.path();  
+        }
+
+        $scope.$apply(function() {
+          $scope.send.recipient = address;
+        });
+      }
+
+      var canvas = document.createElement('canvas');
+      var context = canvas.getContext('2d');
+
+      var img = new Image();
+      img.onload = function() {
+
+        /*
+        Helpful URLs: 
+        http://hacks.mozilla.org/2011/01/how-to-develop-a-html5-image-uploader/
+        http://stackoverflow.com/questions/19432269/ios-html5-canvas-drawimage-vertical-scaling-bug-even-for-small-images
+      
+        There are a lot of arbitrary things here. Help to clean this up welcome.
+        
+        context.save();
+        context.scale(1e6, 1e6);
+        context.drawImage(img, 0, 0, 1e-7, 1e-7, 0, 0, 1e-7, 1e-7);
+        context.restore();
+        */
+
+        if((img.width == 2448 && img.height == 3264) || (img.width == 3264 && img.height == 2448)) {
+          canvas.width = 1024;
+          canvas.height = 1365;
+          context.drawImage(img, 0, 0, 1024, 1365);
+        } else if(img.width > 1024 || img.height > 1024) {
+          canvas.width = img.width*0.15;
+          canvas.height = img.height*0.15;
+          context.drawImage(img, 0, 0, img.width*0.15, img.height*0.15);
+        } else {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          context.drawImage(img, 0, 0, img.width, img.height);
+        }
+
+        qrcode.decode(canvas.toDataURL('image/png'));
+      }
+
+      img.src = URL.createObjectURL(elements.files[0]);
+    }
+
     var timer;
 
     // XRP currency object.

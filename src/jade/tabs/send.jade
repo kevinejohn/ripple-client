@@ -1,5 +1,5 @@
 section.single.content(ng-controller='SendCtrl')
-
+    
   //- Disconnected
 
   group.disconnected(ng-hide='connected')
@@ -18,6 +18,12 @@ section.single.content(ng-controller='SendCtrl')
     ng-submit='send_prepared()')
     p.literal(l10n) Send money on the Ripple network.
     hr
+    .row.form-group.visible-xs(ng-if="'web' === client")
+      .col-xs-12.col-sm-6.col-md-5
+        .alert.alert-danger(ng-show="'failed' === qr_result", l10n) Could not read QR. Try again
+        .alert.alert-danger(ng-show="'invalid' === qr_result", l10n) Invalid Ripple Address
+        label(l10n) Scan QR Code
+        input.btn.btn-block(type="file", accept='image/*', capture='camera', onchange="angular.element(this).scope().readQRCode(this)")
     .row.form-group(ng-if="'web' === client")
       .col-xs-12.col-sm-6.col-md-5
         label(for='send_destination', l10n) Recipient

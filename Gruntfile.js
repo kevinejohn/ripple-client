@@ -42,7 +42,26 @@ module.exports = function(grunt) {
               "deps/js/bootstrap-datepicker.js",
               "deps/js/qrcode-generator/js/qrcode.js",
               "deps/js/spin.js/dist/spin.js",
-              "deps/js/snapjs/snap.js"];
+              "deps/js/snapjs/snap.js",
+              'deps/js/jsqrcode/grid.js',
+              'deps/js/jsqrcode/version.js',
+              'deps/js/jsqrcode/detector.js',
+              'deps/js/jsqrcode/formatinf.js',
+              'deps/js/jsqrcode/errorlevel.js',
+              'deps/js/jsqrcode/bitmat.js',
+              'deps/js/jsqrcode/datablock.js',
+              'deps/js/jsqrcode/bmparser.js',
+              'deps/js/jsqrcode/datamask.js',
+              'deps/js/jsqrcode/rsdecoder.js',
+              'deps/js/jsqrcode/gf256poly.js',
+              'deps/js/jsqrcode/gf256.js',
+              'deps/js/jsqrcode/decoder.js',
+              'deps/js/jsqrcode/qrcode.js',
+              'deps/js/jsqrcode/findpat.js',
+              'deps/js/jsqrcode/alignpat.js',
+              'deps/js/jsqrcode/databr.js',
+              'deps/js/uri.js/src/URI.min.js'
+              ];
 
   var compat_ie = ["compat/ie/base64/base64.js",
                    "compat/ie/ws/web_socket.js",
